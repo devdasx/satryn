@@ -57,7 +57,8 @@ export function RequestFromContactSheet({
 }: RequestFromContactSheetProps) {
   const { isDark, colors } = useTheme();
   const haptics = useHaptics();
-  const walletAddresses = useWalletStore(s => s.addresses);
+  const getFirstUnusedAddress = useWalletStore(s => s.getFirstUnusedAddress);
+  const preferredAddressType = useWalletStore(s => s.preferredAddressType);
   const currency = useSettingsStore(s => s.currency);
   const denomination = useSettingsStore(s => s.denomination);
   const price = usePriceStore((s) => s.price);
@@ -114,10 +115,8 @@ export function RequestFromContactSheet({
   };
 
   const handleGenerate = () => {
-    const receiveAddr = walletAddresses?.[0];
-    const address = typeof receiveAddr === 'string'
-      ? receiveAddr
-      : receiveAddr?.address || '';
+    const receiveAddr = getFirstUnusedAddress(preferredAddressType);
+    const address = receiveAddr?.address || '';
 
     if (!address) {
       Alert.alert('Error', 'No receiving address available');

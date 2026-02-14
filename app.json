@@ -2,7 +2,7 @@
   "expo": {
     "name": "Satryn",
     "slug": "bitcoin-wallet",
-    "version": "1.0.0",
+    "version": "2.36.53",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",

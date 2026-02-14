@@ -40,9 +40,13 @@ export function SendHeader({ step, onClose, onErrorPress }: SendHeaderProps) {
   const currentIndex = STEPS.indexOf(step);
   const showDots = STEPS.includes(step);
 
-  // Back button always navigates back (router handles the stack)
+  // Back button navigates back; if nothing to go back to, go home
   const handleBack = () => {
-    router.back();
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      onClose();
+    }
   };
 
   // Error icon color: red for errors, orange for warnings

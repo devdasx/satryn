@@ -39,7 +39,8 @@ export default function SendSuccessRoute() {
 
   const handleDone = useCallback(() => {
     reset();
-    router.dismissAll();
+    // Always go home after successful broadcast — never back through send flow
+    router.replace('/(auth)/(tabs)');
   }, [reset, router]);
 
   return (

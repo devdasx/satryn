@@ -31,8 +31,16 @@ export default function SendRoute() {
     // Clear any pending deep link payload now that send flow has consumed it
     useDeepLinkStore.getState().clearPending();
 
-    // Replace so the user can't swipe back to this loading screen
-    router.replace('/(auth)/send-recipient');
+    // If both address and amount are already prefilled (e.g. from a payment link),
+    // skip directly to the review screen — no need to re-enter what's already set.
+    const hasAddress = !!(params.address || params.bip21);
+    const hasAmount = !!(params.amount && parseInt(params.amount, 10) > 0);
+
+    if (hasAddress && hasAmount) {
+      router.replace('/(auth)/send-review');
+    } else {
+      router.replace('/(auth)/send-recipient');
+    }
   }, []);
 
   return (

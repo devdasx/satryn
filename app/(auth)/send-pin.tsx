@@ -42,16 +42,15 @@ export default function SendPinRoute() {
         await exportPSBT(pin);
         router.replace('/(auth)/send-psbt');
       } else {
-        // full_sign — navigate to broadcasting, then sign+broadcast
+        // full_sign — navigate to broadcasting screen which handles
+        // sign+broadcast, errors, wallet sync, and retry logic
         router.replace('/(auth)/send-broadcasting');
-        try {
-          await signAndBroadcast(pin);
-          router.replace('/(auth)/send-success');
-        } catch (err: any) {
-          // Error is set in store by signAndBroadcast — logged there
-          console.error('[send-pin] signAndBroadcast failed:', err?.message || err);
-          router.replace('/(auth)/send-review');
-        }
+        signAndBroadcast(pin)
+          .then(() => router.replace('/(auth)/send-success'))
+          .catch(() => {
+            // Error is already set in sendStore by signAndBroadcast.
+            // Broadcasting screen will detect the error, sync wallet, and show retry/home buttons.
+          });
       }
     } catch {
       // Error is set in store by exportPSBT

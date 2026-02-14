@@ -22,7 +22,11 @@ export default function SendRecipientRoute() {
 
   const handleClose = useCallback(() => {
     reset();
-    router.dismissAll();
+    if (router.canGoBack()) {
+      router.dismissAll();
+    } else {
+      router.replace('/(auth)/(tabs)');
+    }
   }, [reset, router]);
 
   const handleErrorPress = useCallback(() => {
