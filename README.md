@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Bitcoin Wallet for iPhone
 
 A secure, self-custodial Bitcoin wallet built with React Native and Expo.
@@ -92,3 +93,6 @@ Testnet faucet: https://testnet-faucet.mempool.co/
 ## License
 
 MIT
+=======
+# satryn
+>>>>>>> ea8685dd6a58ca24869c2e0d66947c32f6b41d11
