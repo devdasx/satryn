@@ -233,11 +233,6 @@ export function StepRecipient() {
     setShowContactPicker(true);
   }, [haptics]);
 
-  const handleNearby = useCallback(() => {
-    haptics.trigger('light');
-    router.push({ pathname: '/(auth)/nearby', params: { mode: 'send' } });
-  }, [haptics, router]);
-
   const handleContactSelect = useCallback((address: string, label?: string) => {
     updateRecipient(activeIndex, { address, label });
     setAddressInput(address);
@@ -441,12 +436,6 @@ export function StepRecipient() {
             <ActionCapsule
               label="Contacts"
               onPress={handleOpenContacts}
-              mutedColor={mutedColor}
-              capsuleBg={c.settingsRow.iconBg}
-            />
-            <ActionCapsule
-              label="Nearby"
-              onPress={handleNearby}
               mutedColor={mutedColor}
               capsuleBg={c.settingsRow.iconBg}
             />

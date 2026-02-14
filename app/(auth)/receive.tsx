@@ -569,14 +569,6 @@ export default function ReceiveScreen() {
               <Text style={[styles.secondaryButtonText, { color: colors.text }]}>Amount</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[styles.secondaryButton, { backgroundColor: surfaceBg }]}
-              onPress={() => router.push({ pathname: '/(auth)/nearby', params: { mode: 'receive' } })}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="bluetooth" size={18} color={colors.text} />
-              <Text style={[styles.secondaryButtonText, { color: colors.text }]}>Nearby</Text>
-            </TouchableOpacity>
           </View>
         </Animated.View>
 

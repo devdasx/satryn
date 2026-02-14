@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams, useGlobalSearchParams } from 'expo-router';
 import { useTheme } from '../../src/hooks';
 import { NearbyProvider, NearbyHeader, NearbyScreen } from '../../src/components/nearby';
 import type { NearbyMode } from '../../src/services/nearby/types';
@@ -15,9 +15,13 @@ import type { NearbyMode } from '../../src/services/nearby/types';
 export default function NearbyPaymentsScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const params = useLocalSearchParams<{ mode?: string }>();
+  const localParams = useLocalSearchParams<{ mode?: string }>();
+  const globalParams = useGlobalSearchParams<{ mode?: string }>();
 
-  const mode: NearbyMode = params.mode === 'send' ? 'send' : 'receive';
+  // Prefer local params but fall back to global params — expo-router can
+  // return empty local params when the screen was pushed from a replaced route.
+  const rawMode = localParams.mode || globalParams.mode;
+  const mode: NearbyMode = rawMode === 'send' ? 'send' : 'receive';
 
   const handleClose = () => {
     router.back();
