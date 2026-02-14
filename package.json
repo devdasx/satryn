@@ -1,6 +1,29 @@
 {
-  "name": "bitcoin-wallet",
+  "name": "satryn",
   "version": "1.0.0",
+  "description": "Self-custody Bitcoin wallet for iOS. Open source, Bitcoin-only, built with React Native and Expo.",
+  "author": "devdasx",
+  "license": "MIT",
+  "homepage": "https://github.com/devdasx/satryn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devdasx/satryn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devdasx/satryn/issues"
+  },
+  "keywords": [
+    "bitcoin",
+    "wallet",
+    "self-custody",
+    "react-native",
+    "expo",
+    "ios",
+    "segwit",
+    "taproot",
+    "multisig",
+    "open-source"
+  ],
   "main": "./index.js",
   "scripts": {
     "start": "expo start",
@@ -10,6 +33,7 @@
     "prebuild": "expo prebuild",
     "build:ios": "eas build --platform ios",
     "build:android": "eas build --platform android",
+    "typecheck": "tsc --noEmit",
     "postinstall": "patch-package"
   },
   "dependencies": {
