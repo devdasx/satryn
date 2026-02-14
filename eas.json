@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 3.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      }
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "ios": {
+        "autoIncrement": true
+      },
+      "credentialsSource": "remote"
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "APPLE_ID",
+        "appleTeamId": "APPLE_TEAM_ID",
+        "ascApiKeyId": "ASC_API_KEY_ID",
+        "ascApiKeyIssuerId": "ASC_API_KEY_ISSUER_ID",
+        "ascApiKeyPath": "./AuthKey.p8"
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+diff --git a/node_modules/expo-icloud-storage/ios/ExpoAppleCloudStorageModule.swift b/node_modules/expo-icloud-storage/ios/ExpoAppleCloudStorageModule.swift
+index b3498de..1ee0d73 100644
+--- a/node_modules/expo-icloud-storage/ios/ExpoAppleCloudStorageModule.swift
++++ b/node_modules/expo-icloud-storage/ios/ExpoAppleCloudStorageModule.swift
+@@ -19,6 +19,27 @@ public class ExpoAppleCloudStorageModule: Module {
+       NSUbiquitousKeyValueStore.default.synchronize()
+     }
+ 
++    Function("removeAndVerify") { (key: String) -> Bool in
++      let store = NSUbiquitousKeyValueStore.default
++      store.removeObject(forKey: key)
++      store.synchronize()
++      // Verify removal: string(forKey:) returns nil for removed keys
++      let stillExists = store.string(forKey: key)
++      if stillExists != nil {
++        // Retry: set empty then remove
++        store.set("", forKey: key)
++        store.synchronize()
++        store.removeObject(forKey: key)
++        store.synchronize()
++        return store.string(forKey: key) == nil
++      }
++      return true
++    }
++
++    Function("synchronize") { () -> Bool in
++      return NSUbiquitousKeyValueStore.default.synchronize()
++    }
++
+     Function("getAllKeys") { () -> [String] in
+       return NSUbiquitousKeyValueStore.default.dictionaryRepresentation.keys.map { String($0) }
+     }
+diff --git a/node_modules/expo-icloud-storage/src/ExpoAppleCloudStorageModule.ts b/node_modules/expo-icloud-storage/src/ExpoAppleCloudStorageModule.ts
+index ae7226e..e5944c6 100644
+--- a/node_modules/expo-icloud-storage/src/ExpoAppleCloudStorageModule.ts
++++ b/node_modules/expo-icloud-storage/src/ExpoAppleCloudStorageModule.ts
+@@ -4,6 +4,8 @@ declare class ExpoAppleCloudStorageModule extends NativeModule {
+   set(key: string, value: string): void;
+   getString(key: string): string | null;
+   remove(key: string): void;
++  removeAndVerify(key: string): boolean;
++  synchronize(): boolean;
+   getAllKeys(): string[];
+ }
+ 
